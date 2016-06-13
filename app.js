@@ -4,15 +4,23 @@ var express = require('express');
 var app = express();
 
 var port = process.env.PORT || 5000;
+var nav = [{Link:'/Books', Text: 'Book'}, 
+					 {Link: '/Authors', Text: 'Author'}];
+var bookRouter = require('./src/routes/bookRoutes')(nav);
 
 app.use(express.static('public'));
 app.set('views', './src/views');
 
 app.set('view engine', 'ejs');
 
+
+app.use('/Books', bookRouter);
+
 app.get('/', function(req, res){
 	//passing an object become available to jade in the template, cool
-	res.render('index', {title: 'hello from ejs', list: ['kenco', 'kenusa']});
+	res.render('index', {title: 'hello from ejs', 
+											 nav: nav
+											});
 
 });
 
