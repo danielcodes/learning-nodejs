@@ -6,10 +6,13 @@ var app = express();
 var port = process.env.PORT || 5000;
 
 app.use(express.static('public'));
-app.use(express.static('src/views'));
+app.set('views', './src/views');
+
+app.set('view engine', 'ejs');
 
 app.get('/', function(req, res){
-	res.send('hello world');
+	//passing an object become available to jade in the template, cool
+	res.render('index', {title: 'hello from ejs', list: ['kenco', 'kenusa']});
 
 });
 
