@@ -106,6 +106,14 @@
             <br>
             <div class="col-md-2 col-sm-3 text-center">
 							Sign in
+							<form name="signInForm" 
+										action="/auth/signIn" 
+										method="post">
+								User Name: <input name="userName" id="userName">
+								Password: <input name="password" id="password">
+								<input type="submit" value="Sign In">
+							
+							</form>
             </div>
 
             <div class="col-md-10 col-sm-9">
@@ -113,8 +121,8 @@
 							<form name="signUpForm" 
 										action="/auth/signUp" 
 										method="post">
-								<input name="userName" id="userName">
-								<input name="password" id="password">
+								User Name: <input name="userName" id="userName">
+								Password: <input name="password" id="password">
 								<input type="submit" value="Sign up">
 							
 							</form>

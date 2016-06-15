@@ -1,6 +1,7 @@
 var express = require('express');
 var authRouter = express.Router();
 var mongodb = require('mongodb').MongoClient;
+var passport = require('passport');
 
 //function is here to do additional things
 var router = function(){
@@ -24,7 +25,6 @@ var router = function(){
 				//collection created on insert
 				//usually a select first to see if user exists
 				collection.insert(user, function(err, results){
-				
 					//passport adds things to the request
 					req.login(results.ops[0], function(){
 						res.redirect('/auth/profile');	
@@ -36,11 +36,23 @@ var router = function(){
 					
 		});
 
+	//password doing work
+	authRouter.route('/signIn')
+		//if it fails redirect, else
+		.post(passport.authenticate('local', {
+			failureRedirect: '/'	
+		}), function(req, res){
+			res.redirect('/auth/profile');	
+		});
+
 	authRouter.route('/profile')
 		.get(function(req, res){
 			res.json(req.user);	
 		});
 	
+
+
+
 	return authRouter;
 
 };
