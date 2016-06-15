@@ -1,5 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+//for auth
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var session = require('express-session');
 
 //instance of express
 var app = express();
@@ -13,11 +17,15 @@ var bookRouter = require('./src/routes/bookRoutes')(nav);
 var adminRouter = require('./src/routes/adminRoutes')(nav);
 var authRouter = require('./src/routes/authRoutes')(nav);
 
+//middleware
 app.use(express.static('public'));
-//no idea what's happening here
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
-
+app.use(cookieParser());
+app.use(session({secret: 'library'}));
+//whatever this returns and pass app
+//because of app.use(), cool
+require('./src/config/passport')(app);
 
 //where the templates are
 app.set('views', './src/views');
