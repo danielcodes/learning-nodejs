@@ -8,6 +8,14 @@ var bookRouter = express.Router();
 //before router was being returned right away
 var router = function(nav){
 
+	//securing all routes
+	bookRouter.use(function(req, res, next){
+		if(!req.user){
+			res.redirect('/');	
+		}
+		next();
+	});
+
 	//all requests associated with /books
 	bookRouter.route('/')
 		.get(function(req, res){
