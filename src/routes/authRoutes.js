@@ -7,14 +7,33 @@ var router = function(){
 
 	authRouter.route('/signUp')
 		.post(function(req, res){
-			//pull user and pw out of form
-			//a nice json object
 			console.log(req.body);
-			//passport adds things to the request
-			req.login(req.body, function(){
-				res.redirect('/auth/profile');	
+
+			//save to db
+			var url = 'mongodb://localhost:27017/libraryApp';
+
+			mongodb.connect(url, function(err, db){
+				//create collection
+				var collection = db.collection('users');
+
+				var user = {
+					username: req.body.userName,
+					password: req.body.password
+				};
+
+				//collection created on insert
+				//usually a select first to see if user exists
+				collection.insert(user, function(err, results){
+				
+					//passport adds things to the request
+					req.login(results.ops[0], function(){
+						res.redirect('/auth/profile');	
+					});
+
+
+				});
 			});
-		
+					
 		});
 
 	authRouter.route('/profile')
