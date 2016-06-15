@@ -5,6 +5,7 @@ var mongodb = require('mongodb').MongoClient;
 //before you forget everything, connection -> collection -> do something
 //sudo service mongod start/stop status
 //can look at the db with 'mongo <name>'
+//to delete all objects, do a db.collection.remove({})
 
 var books = [
 	{
