@@ -44,18 +44,31 @@ var bookController = function(bookService, nav){
 			collection.findOne({_id: id}, function(err, results){
 				//this calls the service, which execuse the function
 				console.log('the result is ', results);
-				bookService.getBookById(results.bookId, function(err, book){
 
-					//object with description
-					results.book = book;
-					res.render('bookView', 
+				if(results.bookId){
+					bookService.getBookById(results.bookId, 
+						function(err, book){
+
+							//object with description
+							//this is actually a big object
+							results.book = book;
+							res.render('bookView', 
+												{title: 'hello from ejs', 
+												 nav: nav,
+												 book: results
+												});
+		
+						});
+				}
+				else{
+						res.render('bookView', 
 										{title: 'hello from ejs', 
 										 nav: nav,
 										 book: results
-									});
-	
-				});
+										});
+				}
 
+			
 			});
 		}); //closes mongo connect
 	};
