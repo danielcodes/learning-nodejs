@@ -8,8 +8,10 @@ var bookRouter = express.Router();
 //before router was being returned right away
 var router = function(nav){
 
+	//has to pull in the service
+	var bookService = require('../services/goodreadsService.js')();
 	var bookController = 
-		require('../controllers/bookController')(null, nav);
+		require('../controllers/bookController')(bookService, nav);
 
 	//securing all routes
 	bookRouter.use(bookController.middleware);

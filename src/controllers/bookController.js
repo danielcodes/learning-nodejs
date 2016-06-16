@@ -42,11 +42,20 @@ var bookController = function(bookService, nav){
 
 			//get all items
 			collection.findOne({_id: id}, function(err, results){
-				res.render('bookView', 
+				//this calls the service, which execuse the function
+				console.log('the result is ', results);
+				bookService.getBookById(results.bookId, function(err, book){
+
+					//object with description
+					results.book = book;
+					res.render('bookView', 
 										{title: 'hello from ejs', 
 										 nav: nav,
 										 book: results
 									});
+	
+				});
+
 			});
 		}); //closes mongo connect
 	};
